@@ -1,0 +1,21 @@
+{
+    "name": "blueprint",
+    "packageManager": "bun@1.3.9",
+    "private": true,
+    "workspaces": [
+        "apps/*",
+        "packages/*"
+    ],
+    "scripts": {
+        "dev": "turbo run dev",
+        "build": "turbo run build",
+        "lint": "turbo run lint",
+        "type-check": "turbo run type-check",
+        "db:generate": "turbo run db:generate --filter=@blueprint/db",
+        "db:migrate": "turbo run db:migrate --filter=@blueprint/db"
+    },
+    "devDependencies": {
+        "turbo": "^2.4.0",
+        "typescript": "^5.7.0"
+    }
+}
