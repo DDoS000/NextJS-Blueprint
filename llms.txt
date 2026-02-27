@@ -1,0 +1,31 @@
+# Blueprint
+> Modern type-safe full-stack monorepo — Next.js + ElysiaJS + Prisma.
+
+## Core Files
+- [apps/web/src/app/layout.tsx]: Root layout (fonts, providers)
+- [apps/web/src/app/page.tsx]: Home page
+- [apps/web/src/lib/api.ts]: Eden Treaty API client
+- [apps/web/src/providers/query-provider.tsx]: TanStack Query provider
+- [apps/server/src/index.ts]: ElysiaJS entry, CORS, routes
+- [apps/server/src/controllers/auth.controller.ts]: Auth endpoints
+- [apps/server/src/services/auth.service.ts]: Auth business logic
+- [apps/server/src/repositories/user.repository.ts]: Prisma user queries
+- [packages/db/prisma/schema.prisma]: Database schema (User, Account)
+- [packages/db/src/index.ts]: Prisma client singleton
+- [packages/shared/src/index.ts]: Zod schemas, types, constants
+- [docs/api-reference.md]: API documentation
+- [docs/architecture.md]: Architecture guide
+
+## Key Concepts
+- **End-to-end type safety**: Prisma → ElysiaJS → Eden Treaty → React (zero manual type syncing)
+- **Layered backend**: Controller → Service → Repository pattern
+- **Custom auth**: JWT in HTTP-only cookies, Argon2id password hashing via Bun.password
+- **Monorepo**: Turborepo + Bun workspaces for dependency management
+- **Shared validation**: Zod schemas in @blueprint/shared used by both frontend and backend
+
+## Tech Stack
+- Frontend: Next.js 16, React 19, Tailwind CSS v4, shadcn/ui, TanStack Query v5
+- Backend: ElysiaJS, Bun, @elysiajs/jwt, @elysiajs/cors
+- Database: PostgreSQL (Supabase), Prisma 6
+- Testing: Playwright
+- Build: Turborepo, TypeScript strict mode
