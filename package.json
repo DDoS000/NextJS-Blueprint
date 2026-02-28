@@ -12,7 +12,8 @@
         "lint": "turbo run lint",
         "type-check": "turbo run type-check",
         "db:generate": "turbo run db:generate --filter=@blueprint/db",
-        "db:migrate": "turbo run db:migrate --filter=@blueprint/db"
+        "db:migrate": "turbo run db:migrate --filter=@blueprint/db",
+        "db:push": "turbo run db:push --filter=@blueprint/db"
     },
     "devDependencies": {
         "turbo": "^2.4.0",
