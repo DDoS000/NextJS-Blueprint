@@ -1,6 +1,7 @@
 import { Elysia, t } from "elysia";
 import { jwt } from "@elysiajs/jwt";
 import { authService } from "../services/auth.service";
+import { authMiddleware } from "../middleware/auth.middleware";
 import { AUTH_COOKIE_NAME } from "@blueprint/shared";
 
 export const authController = new Elysia({ prefix: "/auth" })
@@ -95,25 +96,13 @@ export const authController = new Elysia({ prefix: "/auth" })
         return { success: true, message: "Logged out successfully" };
     })
 
-    // ─── Get Current User ──────────────────────────────────────
-    .get("/me", async ({ cookie, jwt, set }) => {
-        const token = cookie[AUTH_COOKIE_NAME].value as string | undefined;
-        if (!token) {
-            set.status = 401;
-            return { success: false, message: "Not authenticated" };
-        }
-
-        const payload = await jwt.verify(token);
-        if (!payload || !payload.sub) {
-            set.status = 401;
-            return { success: false, message: "Invalid token" };
-        }
-
-        const user = await authService.getProfile(payload.sub as string);
+    // ─── Get Current User (protected via authMiddleware) ───────
+    .use(authMiddleware)
+    .get("/me", async ({ auth, set }) => {
+        const user = await authService.getProfile(auth.sub);
         if (!user) {
             set.status = 404;
             return { success: false, message: "User not found" };
         }
-
         return { success: true, data: user };
     });
